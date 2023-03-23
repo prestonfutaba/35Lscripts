@@ -1,0 +1,16 @@
+#! /bin/bash
+
+
+if [ $# -eq 0 ]
+then
+   if [ -t 0 ]
+   then
+      printf "Input: "
+   fi
+   read input
+else
+   input=$@
+fi
+
+grep ^CommitDate.*[+-][0-9][0-9][0-9][0-9]$ $@| grep [+-][0-9][0-9][0-9][0-9]$ | awk '/CommitDate/{print $NF}' | sort -nr | uniq -c | awk '{printf "%-6s%s\n", $2, $1}'
+
